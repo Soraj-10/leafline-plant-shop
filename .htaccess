@@ -1,0 +1,24 @@
+<IfModule mod_rewrite.c>
+    # Enable rewrite engine
+    RewriteEngine On
+    RewriteBase /plantshop/
+
+    # Do not process requests for actual files or directories
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Rewrite URLs without .php extension to their corresponding PHP files
+    # This allows /plantshop/shop to map to /plantshop/shop.php
+    RewriteRule ^([a-zA-Z0-9_-]+)/?$ $1.php [L,QSA]
+    
+    # Handle URLs with query strings
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^([a-zA-Z0-9_-]+)/(.*)$ $1.php?$2 [L,QSA]
+</IfModule>
+
+# Prevent direct access to .php files (optional security)
+# Uncomment if you want to force clean URLs only
+# <FilesMatch "\.php$">
+#     Deny from all
+# </FilesMatch>
